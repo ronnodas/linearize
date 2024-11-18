@@ -1,0 +1,20 @@
+[package]
+name = "linearize-tests"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+static_assertions = "1.1.0"
+linearize = { path = "../linearize", features = ["all"] }
+serde = { version = "1.0.215", features = ["derive"] }
+serde_json = "1.0.133"
+rand = "0.8.5"
+bytemuck = "1.19.0"
+arbitrary = "1.4.1"
+
+[build-dependencies]
+version_check = "0.9.5"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(more_const_functions)'] }
