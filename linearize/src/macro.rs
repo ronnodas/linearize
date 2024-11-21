@@ -307,10 +307,10 @@ macro_rules! static_map {
 #[macro_export]
 macro_rules! static_copy_map {
     (constants of type $ty:ty: $($key:expr => $val:expr),*$(,)?) => {
-        $crate::StaticCopyMap(static_map!(constants of type $ty: $($key => $val)*).0)
+        $crate::StaticCopyMap($crate::static_map!(constants of type $ty: $($key => $val,)*).0)
     };
     (of type $ty:ty: $($tt:tt)*) => {
-        $crate::StaticCopyMap(static_map!(of type $ty: $($tt)*).0)
+        $crate::StaticCopyMap($crate::static_map!(of type $ty: $($tt)*).0)
     };
     ($($tt:tt)*) => {
         $crate::static_map!($($tt)*).into_copy()
