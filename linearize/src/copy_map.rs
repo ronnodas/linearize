@@ -223,6 +223,25 @@ where
     {
         self.into_static_map().map_values(map).into_copy()
     }
+
+    /// Consumes the map and returns an iterator over the values.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// # use linearize::{static_copy_map, StaticCopyMap};
+    /// let mut map: StaticCopyMap<_, u8> = static_copy_map! {
+    ///     false => 0,
+    ///     true => 1,
+    /// };
+    /// let mut iter = map.into_values();
+    /// assert_eq!(iter.next(), Some(0));
+    /// assert_eq!(iter.next(), Some(1));
+    /// assert_eq!(iter.next(), None);
+    /// ```   
+    pub fn into_values(self) -> <L::CopyStorage<T> as IntoIterator>::IntoIter {
+        self.0.into_iter()
+    }
 }
 
 impl<L, T> Deref for StaticCopyMap<L, T>

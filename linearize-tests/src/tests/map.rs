@@ -450,6 +450,68 @@ fn into_iter() {
 }
 
 #[test]
+fn into_values() {
+    let map: StaticMap<_, u8> = static_map! {
+        false => 0,
+        true => 1,
+    };
+    {
+        let mut iter = map.clone().into_values();
+        assert_eq!(iter.next(), Some(0));
+        assert_eq!(iter.next(), Some(1));
+        assert_eq!(iter.next(), None);
+    }
+    {
+        let mut iter = map.clone().into_values();
+        assert_eq!(iter.next_back(), Some(1));
+        assert_eq!(iter.next_back(), Some(0));
+        assert_eq!(iter.next_back(), None);
+    }
+    {
+        let iter = map.clone().into_values();
+        assert_eq!(iter.size_hint(), (2, Some(2)));
+    }
+    {
+        let iter = map.clone().into_values();
+        assert_eq!(iter.count(), 2);
+    }
+    {
+        let iter = map.clone().into_values();
+        assert_eq!(iter.last(), Some(1));
+    }
+    {
+        let mut iter = map.clone().into_values();
+        assert_eq!(iter.nth(0), Some(0));
+        assert_eq!(iter.nth(0), Some(1));
+        assert_eq!(iter.nth(0), None);
+    }
+    {
+        let mut iter = map.clone().into_values();
+        assert_eq!(iter.nth(1), Some(1));
+        assert_eq!(iter.nth(0), None);
+    }
+    {
+        let mut iter = map.clone().into_values();
+        assert_eq!(iter.nth(2), None);
+    }
+    {
+        let mut iter = map.clone().into_values();
+        assert_eq!(iter.nth_back(0), Some(1));
+        assert_eq!(iter.nth_back(0), Some(0));
+        assert_eq!(iter.nth_back(0), None);
+    }
+    {
+        let mut iter = map.clone().into_values();
+        assert_eq!(iter.nth_back(1), Some(0));
+        assert_eq!(iter.nth_back(0), None);
+    }
+    {
+        let mut iter = map.clone().into_values();
+        assert_eq!(iter.nth_back(2), None);
+    }
+}
+
+#[test]
 fn deref() {
     let mut map: StaticMap<_, u8> = static_map! {
         false => 0,

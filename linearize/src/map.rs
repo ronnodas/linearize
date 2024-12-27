@@ -543,6 +543,25 @@ where
     {
         IterMut::new(&mut self.0)
     }
+
+    /// Consumes the map and returns an iterator over the values.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// # use linearize::{static_map, StaticMap};
+    /// let mut map: StaticMap<_, u8> = static_map! {
+    ///     false => 0,
+    ///     true => 1,
+    /// };
+    /// let mut iter = map.into_values();
+    /// assert_eq!(iter.next(), Some(0));
+    /// assert_eq!(iter.next(), Some(1));
+    /// assert_eq!(iter.next(), None);
+    /// ```   
+    pub fn into_values(self) -> <L::Storage<T> as IntoIterator>::IntoIter {
+        self.0.into_iter()
+    }
 }
 
 impl<L, T> Deref for StaticMap<L, T>
