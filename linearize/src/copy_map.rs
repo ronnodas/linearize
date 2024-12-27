@@ -1,7 +1,7 @@
 use {
     crate::{
         iter::{Iter, IterMut},
-        map::iters::IntoIter,
+        map::iters::{IntoIter, IntoValues},
         storage::CopyStorage,
         Linearize, Linearized, StaticMap,
     },
@@ -239,8 +239,11 @@ where
     /// assert_eq!(iter.next(), Some(1));
     /// assert_eq!(iter.next(), None);
     /// ```   
-    pub fn into_values(self) -> <L::CopyStorage<T> as IntoIterator>::IntoIter {
-        self.0.into_iter()
+    pub fn into_values(self) -> IntoValues<L, T>
+    where
+        L: Sized,
+    {
+        self.into_static_map().into_values()
     }
 }
 
