@@ -115,13 +115,13 @@ pub unsafe trait Linearize {
     ///
     /// This type exists due to a limitation of the rust type system. In a future version
     /// of this crate, all uses of it will be replaced by `[T; Self::LENGTH]`.
-    type Storage<T>: Storage<Self, T>;
+    type Storage<T>: Storage<Self, T> + IntoIterator<Item = T>;
 
     /// `[T; Self::LENGTH]`
     ///
     /// This type exists due to a limitation of the rust type system. In a future version
     /// of this crate, all uses of it will be replaced by `[T; Self::LENGTH]`.
-    type CopyStorage<T>: CopyStorage<Self, T>
+    type CopyStorage<T>: CopyStorage<Self, T> + IntoIterator<Item = T>
     where
         T: Copy;
 
