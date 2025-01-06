@@ -59,6 +59,17 @@ fn into_static_map() {
 }
 
 #[test]
+fn from_static_map() {
+    let map: StaticMap<_, _> = static_map! {
+        false => 0,
+        true => 1,
+    };
+    let map: StaticCopyMap<_, _> = StaticCopyMap::from_static_map(map);
+    assert_eq!(map[false], 0);
+    assert_eq!(map[true], 1);
+}
+
+#[test]
 fn as_static_map() {
     let map: StaticCopyMap<_, _> = static_copy_map! {
         false => 0,

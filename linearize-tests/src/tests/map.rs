@@ -1,5 +1,5 @@
 use {
-    linearize::{static_map, LinearizeExt, StaticCopyMap, StaticMap},
+    linearize::{static_copy_map, static_map, LinearizeExt, StaticCopyMap, StaticMap},
     std::{
         borrow::{Borrow, BorrowMut},
         cmp::Ordering,
@@ -136,6 +136,17 @@ fn into_copy() {
         true => 1,
     };
     let map: StaticCopyMap<_, _> = map.into_copy();
+    assert_eq!(map[false], 0);
+    assert_eq!(map[true], 1);
+}
+
+#[test]
+fn from_copy() {
+    let map: StaticCopyMap<_, _> = static_copy_map! {
+        false => 0,
+        true => 1,
+    };
+    let map: StaticMap<_, _> = StaticMap::from_copy(map);
     assert_eq!(map[false], 0);
     assert_eq!(map[true], 1);
 }
