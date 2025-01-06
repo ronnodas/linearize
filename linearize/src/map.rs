@@ -1,7 +1,7 @@
 use {
     crate::{
         copy_map::StaticCopyMap,
-        map::iters::{IntoIter, Iter, IterMut},
+        map::iters::{IntoIter, IntoValues, Iter, IterMut},
         storage::Storage,
         variants::Variants,
         Linearize, LinearizeExt, Linearized,
@@ -542,6 +542,28 @@ where
         L: Sized,
     {
         IterMut::new(&mut self.0)
+    }
+
+    /// Consumes the map and returns an iterator over the values.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// # use linearize::{static_map, StaticMap};
+    /// let mut map: StaticMap<_, u8> = static_map! {
+    ///     false => 0,
+    ///     true => 1,
+    /// };
+    /// let mut iter = map.into_values();
+    /// assert_eq!(iter.next(), Some(0));
+    /// assert_eq!(iter.next(), Some(1));
+    /// assert_eq!(iter.next(), None);
+    /// ```   
+    pub fn into_values(self) -> IntoValues<L, T>
+    where
+        L: Sized,
+    {
+        IntoValues::new(self.0)
     }
 }
 

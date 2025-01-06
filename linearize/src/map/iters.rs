@@ -290,3 +290,70 @@ where
         })
     }
 }
+
+/// A consuming iterator over the keys and values of a [`StaticMap`].
+pub struct IntoValues<L, T>
+where
+    L: Linearize,
+{
+    iter: <<L as Linearize>::Storage<T> as IntoIterator>::IntoIter,
+}
+
+impl<L, T> IntoValues<L, T>
+where
+    L: Linearize,
+{
+    pub(super) fn new(storage: L::Storage<T>) -> Self {
+        Self {
+            iter: <L::Storage<T> as IntoIterator>::into_iter(storage),
+        }
+    }
+}
+
+impl<L, T> Iterator for IntoValues<L, T>
+where
+    L: Linearize,
+{
+    type Item = T;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.iter.next()
+    }
+
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        self.iter.size_hint()
+    }
+
+    fn count(self) -> usize
+    where
+        Self: Sized,
+    {
+        self.iter.count()
+    }
+
+    fn last(self) -> Option<Self::Item>
+    where
+        Self: Sized,
+    {
+        self.iter.last()
+    }
+
+    fn nth(&mut self, n: usize) -> Option<Self::Item> {
+        self.iter.nth(n)
+    }
+}
+
+impl<L, T> ExactSizeIterator for IntoValues<L, T> where L: Linearize {}
+
+impl<L, T> DoubleEndedIterator for IntoValues<L, T>
+where
+    L: Linearize,
+{
+    fn next_back(&mut self) -> Option<Self::Item> {
+        self.iter.next_back()
+    }
+
+    fn nth_back(&mut self, n: usize) -> Option<Self::Item> {
+        self.iter.nth_back(n)
+    }
+}
