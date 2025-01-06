@@ -1,5 +1,5 @@
 use {
-    linearize::{static_copy_map, static_map, LinearizeExt, StaticCopyMap, StaticMap},
+    linearize::{static_copy_map, static_map, Linearize, LinearizeExt, StaticCopyMap, StaticMap},
     std::{
         borrow::{Borrow, BorrowMut},
         cmp::Ordering,
@@ -424,4 +424,23 @@ fn from_iterator() {
     let map: StaticCopyMap<bool, u8> = [(&false, 1), (&true, 2)].into_iter().collect();
     assert_eq!(map[false], 1);
     assert_eq!(map[true], 2);
+}
+
+#[test]
+fn type_inference() {
+    #[derive(Linearize)]
+    enum X {
+        A,
+        B,
+    }
+    impl X {
+        fn f(self) -> u32 {
+            self as u32
+        }
+    }
+    let map: StaticCopyMap<X, _> = static_copy_map! {
+        v => v.f(),
+    };
+    assert_eq!(map[X::A], 0);
+    assert_eq!(map[X::B], 1);
 }
