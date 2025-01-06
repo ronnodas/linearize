@@ -313,7 +313,7 @@ macro_rules! static_copy_map {
         $crate::StaticCopyMap($crate::static_map!(of type $ty: $($tt)*).0)
     };
     ($($tt:tt)*) => {
-        $crate::static_map!($($tt)*).into_copy()
+        $crate::StaticCopyMap::from_static_map($crate::static_map!($($tt)*))
     };
 }
 

@@ -119,6 +119,27 @@ where
         StaticMap(self.0.into_storage())
     }
 
+    /// Converts a [StaticMap] to a [StaticCopyMap].
+    ///
+    /// This is a zero-cost conversion.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// # use linearize::{static_map, StaticCopyMap, StaticMap};
+    /// let map: StaticMap<_, _> = static_map! {
+    ///     false => 0,
+    ///     true => 1,
+    /// };
+    /// let map: StaticCopyMap<_, _> = StaticCopyMap::from_static_map(map);
+    /// assert_eq!(map[false], 0);
+    /// assert_eq!(map[true], 1);
+    /// ```
+    #[inline]
+    pub fn from_static_map(map: StaticMap<L, T>) -> Self {
+        map.into_copy()
+    }
+
     /// Converts a reference to this map to a reference to a [StaticMap].
     ///
     /// This is a zero-cost re-interpretation conversion.
