@@ -112,8 +112,8 @@ where
     /// assert_eq!(map, Err(StaticCopyMap([Some(0), None])));
     /// ```
     #[inline]
-    pub fn try_from_iter<I: IntoIterator<Item = (L, T)>>(
-        iter: I,
+    pub fn try_from_iter(
+        iter: impl IntoIterator<Item = (L, T)>,
     ) -> Result<Self, StaticCopyMap<L, Option<T>>>
     where
         L: Sized,
