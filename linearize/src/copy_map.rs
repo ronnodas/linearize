@@ -98,6 +98,32 @@ where
         }
     }
 
+    /// Fallibly collects an iterator into a map. Returns Err if some key is not produced by
+    /// the iterator.
+    ///
+    /// # Example
+    ///
+    /// ```rust
+    /// use linearize::StaticCopyMap;
+    /// let map = StaticCopyMap::try_from_iter([(false, 0), (true, 1)]);
+    /// assert_eq!(map, Ok(StaticCopyMap([0, 1])));
+    ///
+    /// let map = StaticCopyMap::try_from_iter([(false, 0)]);
+    /// assert_eq!(map, Err(StaticCopyMap([Some(0), None])));
+    /// ```
+    #[inline]
+    pub fn try_from_iter(
+        iter: impl IntoIterator<Item = (L, T)>,
+    ) -> Result<Self, StaticCopyMap<L, Option<T>>>
+    where
+        L: Sized,
+    {
+        match StaticMap::try_from_iter(iter) {
+            Ok(map) => Ok(map.into_copy()),
+            Err(map) => Err(map.into_copy()),
+        }
+    }
+
     /// Converts this map to a [StaticMap].
     ///
     /// This is a zero-cost conversion.

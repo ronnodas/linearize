@@ -427,6 +427,23 @@ fn from_iterator() {
 }
 
 #[test]
+fn try_from_iterator() {
+    let array: [(bool, u8); 0] = [];
+    let map: StaticMap<bool, Option<u8>> = StaticMap::try_from_iter(array).unwrap_err();
+    assert_eq!(map[false], None);
+    assert_eq!(map[true], None);
+    let map: StaticMap<bool, Option<u8>> = StaticMap::try_from_iter([(false, 1)]).unwrap_err();
+    assert_eq!(map[false], Some(1));
+    assert_eq!(map[true], None);
+    let map: StaticMap<bool, Option<u8>> = StaticMap::try_from_iter([(true, 2)]).unwrap_err();
+    assert_eq!(map[false], None);
+    assert_eq!(map[true], Some(2));
+    let map: StaticMap<bool, u8> = StaticMap::try_from_iter([(false, 1), (true, 2)]).unwrap();
+    assert_eq!(map[false], 1);
+    assert_eq!(map[true], 2);
+}
+
+#[test]
 fn type_inference() {
     #[derive(Linearize)]
     enum X {
