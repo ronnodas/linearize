@@ -12,15 +12,16 @@ rust-version = "1.83.0"
 
 [features]
 default = ["std"]
-all = ["std", "alloc", "derive", "serde-1", "arbitrary-1", "bytemuck-1", "rand-0_8"]
+all = ["std", "alloc", "derive", "serde-1", "arbitrary-1", "bytemuck-1", "rand-0_8", "rand-0_9"]
 std = ["alloc"]
-alloc = ["rand-0_8?/alloc"]
+alloc = ["rand-0_8?/alloc", "rand-0_9?/alloc"]
 derive = ["dep:linearize-derive"]
 
 serde-1 = ["dep:serde-1"]
 arbitrary-1 = ["dep:arbitrary-1"]
 bytemuck-1 = ["dep:bytemuck-1"]
 rand-0_8 = ["dep:rand-0_8"]
+rand-0_9 = ["dep:rand-0_9"]
 
 [dependencies]
 cfg-if = "1"
@@ -29,6 +30,7 @@ serde-1 = { package = "serde", version = "1", default-features = false, optional
 arbitrary-1 = { package = "arbitrary", version = "1.4", default-features = false, optional = true }
 bytemuck-1 = { package = "bytemuck", version = "1.9", default-features = false, optional = true }
 rand-0_8 = { package = "rand", version = "0.8.3", default-features = false, optional = true }
+rand-0_9 = { package = "rand", version = "0.9", default-features = false, optional = true }
 
 [build-dependencies]
 version_check = "0.9.5"
