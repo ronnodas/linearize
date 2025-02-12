@@ -199,7 +199,7 @@ where
     /// assert_eq!(map[true], 1);
     /// ```
     #[inline]
-    pub fn from_ref(storage: &<L as Linearize>::Storage<T>) -> &Self {
+    pub const fn from_ref(storage: &<L as Linearize>::Storage<T>) -> &Self {
         unsafe {
             // SAFETY: Self is a transparent wrapper around L::Storage<T>.
             mem::transmute(storage)

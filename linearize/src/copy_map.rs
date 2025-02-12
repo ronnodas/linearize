@@ -67,7 +67,7 @@ where
     /// assert_eq!(map[true], 1);
     /// ```
     #[inline]
-    pub fn from_ref(storage: &L::CopyStorage<T>) -> &Self {
+    pub const fn from_ref(storage: &L::CopyStorage<T>) -> &Self {
         unsafe {
             // SAFETY: Self is a transparent wrapper around L::CopyStorage<T>.
             mem::transmute(storage)
