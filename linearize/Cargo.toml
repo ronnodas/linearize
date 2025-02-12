@@ -23,6 +23,9 @@ bytemuck-1 = ["dep:bytemuck-1"]
 rand-0_8 = ["dep:rand-0_8"]
 rand-0_9 = ["dep:rand-0_9"]
 
+[package.metadata.docs.rs]
+all-features = true
+
 [dependencies]
 cfg-if = "1"
 linearize-derive = { path = "../linearize-derive", version = "0.1", optional = true }
