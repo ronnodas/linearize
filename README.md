@@ -2,6 +2,7 @@
 
 [![crates.io](https://img.shields.io/crates/v/linearize.svg)](http://crates.io/crates/linearize)
 [![docs.rs](https://docs.rs/linearize/badge.svg)](http://docs.rs/linearize)
+![MSRV](https://img.shields.io/crates/msrv/linearize)
 
 This crate provides a trait that defines an enumeration of a type and an efficient no_std
 map that uses such types as keys.
@@ -27,6 +28,10 @@ fn main() {
     assert_eq!(map[Keys::B(true)], "c");
 }
 ```
+
+## MSRV
+
+The MSRV is `max(1.83, stable - 3)`.
 
 ## License
 
