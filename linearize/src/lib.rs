@@ -1,5 +1,6 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 #![forbid(clippy::missing_safety_doc)]
+#![allow(clippy::needless_late_init)]
 
 //! A crate for enumerable types.
 //!
